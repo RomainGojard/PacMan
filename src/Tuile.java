@@ -35,10 +35,6 @@ public class Tuile {
                 this.isPacManHere = true;
                 pacMan = new PacMan(i, j);
             }
-            case 'w' -> {
-                isGhostHere = true;
-                arrayOfGhost.add(new Ghosts(i, j));
-            }
             default -> {
                 color = WALL_COLOR;
                 isTroughable = false;

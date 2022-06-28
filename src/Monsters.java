@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 public class Monsters {
 
+    protected char[] forms = {'T'};
+
     protected char form;
     protected String color;
     private int x;
@@ -19,7 +21,6 @@ public class Monsters {
                 if (terrain.getIsTroughable(x, y + 1)) {
                     if (this instanceof PacMan) {
                         terrain.switchTuilePacMan(x, y, x, y + 1);
-                        ((PacMan) this).pacManOrientation(direction);
                     } else if (this instanceof Ghosts) {
                         terrain.switchTuileGhost((Ghosts) this, x, y, x, y + 1);
                     }
@@ -30,7 +31,6 @@ public class Monsters {
                 if (terrain.getIsTroughable(x + 1, y)) {
                     if (this instanceof PacMan) {
                         terrain.switchTuilePacMan(x, y, x + 1, y);
-                        ((PacMan) this).pacManOrientation(direction);
                     } else if (this instanceof Ghosts) {
                         terrain.switchTuileGhost((Ghosts) this, x, y, x + 1, y);
                     }
@@ -41,7 +41,6 @@ public class Monsters {
                 if (terrain.getIsTroughable(x, y - 1)) {
                     if (this instanceof PacMan) {
                         terrain.switchTuilePacMan(x, y, x, y - 1);
-                        ((PacMan) this).pacManOrientation(direction);
                     } else if (this instanceof Ghosts) {
                         terrain.switchTuileGhost((Ghosts) this, x, y, x, y - 1);
                     }
@@ -52,7 +51,6 @@ public class Monsters {
                 if (terrain.getIsTroughable(x - 1, y)) {
                     if (this instanceof PacMan) {
                         terrain.switchTuilePacMan(x, y, x - 1, y);
-                        ((PacMan) this).pacManOrientation(direction);
                     } else if (this instanceof Ghosts) {
                         terrain.switchTuileGhost((Ghosts) this, x, y, x - 1, y);
                     }
@@ -60,6 +58,7 @@ public class Monsters {
                 }
             }
         }
+        this.monsterOrientation(direction);
     }
 
     public String afficherMonster() {
@@ -78,5 +77,14 @@ public class Monsters {
             }
         }
         return gameOver;
+    }
+
+    public void monsterOrientation(String direction) {
+        switch (direction) {
+            case "right" -> this.form = forms[0];
+            case "left" -> this.form = forms[1];
+            case "down" -> this.form = forms[2];
+            case "up" -> this.form = forms[3];
+        }
     }
 }

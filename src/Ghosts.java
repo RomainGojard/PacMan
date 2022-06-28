@@ -1,9 +1,6 @@
 import java.util.Random;
 
 public class Ghosts extends Monsters {
-    private String color;
-
-    private char form = 'w';
 
     private String role;
 
@@ -23,6 +20,8 @@ public class Ghosts extends Monsters {
                 role = "random";
             }
         }
+        forms = new char[]{'⋐', '⋑', '⋒', '⋓'};
+        form = forms[0];
     }
 
     public String whereToGo(Terrain terrain, PacMan pacMan) {
@@ -77,10 +76,5 @@ public class Ghosts extends Monsters {
             }
         }
         return direction;
-    }
-
-    @Override
-    public String afficherMonster() {
-        return color + form;
     }
 }

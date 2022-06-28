@@ -21,7 +21,6 @@ public class Main {
 
         final long REFRESH_TIME = 500;
         boolean play = true;
-        boolean gameOverCase1, gameOverCase2;
         int maxScore = terrain.getMaxScore();
         while (play) {
             clearConsoleScreen();
@@ -35,7 +34,11 @@ public class Main {
                 }
             }
 
-            gameOverCase1 = pacMan.isGameOver(arrayOfGhosts);
+            if (pacMan.isGameOver(arrayOfGhosts)) {
+                terrain.afficheTerrain();
+                play = false;
+                pacMan.gameOver(maxScore);
+            }
 
 
             for (Ghosts ghost : arrayOfGhosts
@@ -44,17 +47,13 @@ public class Main {
                 ghost.deplacerMonster(terrain, direction);
             }
 
-            gameOverCase2 = pacMan.isGameOver(arrayOfGhosts);
-
             terrain.afficheTerrain();
 
-            if (gameOverCase1 | gameOverCase2) {
+            if (pacMan.isGameOver(arrayOfGhosts)) {
                 play = false;
                 pacMan.gameOver(maxScore);
-                System.exit(0);
             } else if (pacMan.win(maxScore)) {
                 play = false;
-                System.exit(0);
             } else {
                 pacMan.afficheScore(maxScore);
                 Thread.sleep(REFRESH_TIME);
@@ -62,4 +61,3 @@ public class Main {
         }
     }
 }
-
