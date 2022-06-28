@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Main {
 
@@ -22,7 +21,8 @@ public class Main {
 
         final long REFRESH_TIME = 500;
         boolean play = true;
-        boolean gameOverCase1, gameOverCase2 = false;
+        boolean gameOverCase1, gameOverCase2;
+        int maxScore = terrain.getMaxScore();
         while (play) {
             clearConsoleScreen();
 
@@ -50,12 +50,15 @@ public class Main {
 
             if (gameOverCase1 | gameOverCase2) {
                 play = false;
-                pacMan.gameOver();
-                inputControllers = null;
+                pacMan.gameOver(maxScore);
+                System.exit(0);
+            } else if (pacMan.win(maxScore)) {
+                play = false;
+                System.exit(0);
             } else {
-                pacMan.afficheScore();
+                pacMan.afficheScore(maxScore);
+                Thread.sleep(REFRESH_TIME);
             }
-            Thread.sleep(REFRESH_TIME);
         }
     }
 }

@@ -25,7 +25,7 @@ public class Tuile {
     }
 
     public Tuile(char caractere, int i, int j) {
-        arrayOfGhost = new ArrayList<Ghosts>();
+        arrayOfGhost = new ArrayList<>();
         switch (caractere) {
             case '.', ' ' -> {
                 color = COIN_COLOR;
@@ -81,15 +81,11 @@ public class Tuile {
         return this.pacMan;
     }
 
-    public ArrayList<Ghosts> getGhost() {
-        return arrayOfGhost;
-    }
-
     public boolean getIsPacManHere() {
         return isPacManHere;
     }
 
-    public boolean getIsGhostHere() {
-        return isGhostHere;
+    public boolean isScorable() {
+        return this.form == '.';
     }
 }

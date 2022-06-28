@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Terrain {
 
+    private int maxScore = 0;
     private final int xLenght;
 
     private final int yLenght;
@@ -27,6 +28,9 @@ public class Terrain {
             for (int j = 0; j < row.length(); j++) {
                 Tuile tuile = new Tuile(row.charAt(j), i, j);
                 terrainDeTuiles[i][j] = tuile;
+                if (tuile.isScorable()) {
+                    maxScore++;
+                }
             }
             i++;
         }
@@ -80,7 +84,11 @@ public class Terrain {
         return terrainDeTuiles[x][y].getIsTroughable();
     }
 
-    public int[] getLenght(){
-        return new int[] {this.xLenght, this.yLenght};
+    public int[] getLenght() {
+        return new int[]{this.xLenght, this.yLenght};
+    }
+
+    public int getMaxScore(){
+        return this.maxScore;
     }
 }

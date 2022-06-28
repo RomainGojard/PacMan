@@ -30,12 +30,18 @@ public class PacMan extends Monsters {
         this.score++;
     }
 
-    public void afficheScore() {
-        System.out.println(Colors.ANSI_CYAN + this.score);
+    public void afficheScore(int maxScore) {
+        System.out.println(Colors.ANSI_CYAN + this.score + " " + Colors.ANSI_WHITE + "/ " + Colors.ANSI_CYAN + maxScore);
     }
 
-    public void gameOver(){
-        System.out.println(Colors.ANSI_WHITE + "Vous avez perdu !\nVotre score est de " + Colors.ANSI_CYAN + this.score);
+    public void gameOver(int maxScore) {
+        System.out.println(Colors.ANSI_PURPLE + "Vous avez perdu !\nVotre score est de " + Colors.ANSI_CYAN + this.score + " " + Colors.ANSI_WHITE + "/ " + Colors.ANSI_CYAN + maxScore);
     }
 
+    public boolean win(int maxScore) {
+        if (this.score >= maxScore) {
+            System.out.println(Colors.ANSI_PURPLE + "Vous avez gagné !\nVous avez atteint le score maximal de  " + Colors.ANSI_CYAN + this.score);
+            return true;
+        } else return false;
+    }
 }

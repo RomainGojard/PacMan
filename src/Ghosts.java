@@ -3,7 +3,7 @@ import java.util.Random;
 public class Ghosts extends Monsters {
     private String color;
 
-    private final char form = 'w';
+    private char form = 'w';
 
     private String role;
 
@@ -28,14 +28,14 @@ public class Ghosts extends Monsters {
     public String whereToGo(Terrain terrain, PacMan pacMan) {
         String direction = "";
         int[] ghostCoord = this.getCoordinates();
-        int[] terrainLenght = terrain.getLenght();
         switch (this.role) {
             case "follow" -> {
                 int[] pacManCoord = pacMan.getCoordinates();
                 int[] vector = {ghostCoord[0] - pacManCoord[0], ghostCoord[1] - pacManCoord[1]};
-                if ((Math.abs(vector[0]) >= Math.abs(vector[1])) & (vector[0] > 0) & terrain.getIsTroughable(ghostCoord[0] - 1, ghostCoord[1])) {
+                boolean isXDistanceBigger = Math.abs(vector[0]) >= Math.abs(vector[1]);
+                if (isXDistanceBigger & (vector[0] > 0) & terrain.getIsTroughable(ghostCoord[0] - 1, ghostCoord[1])) {
                     direction = "up";
-                } else if ((Math.abs(vector[0]) >= Math.abs(vector[1])) & (vector[0] < 0) & terrain.getIsTroughable(ghostCoord[0] + 1, ghostCoord[1])) {
+                } else if (isXDistanceBigger & (vector[0] < 0) & terrain.getIsTroughable(ghostCoord[0] + 1, ghostCoord[1])) {
                     direction = "down";
                 } else {
                     if (vector[1] > 0 & terrain.getIsTroughable(ghostCoord[0], ghostCoord[1] - 1)) {
