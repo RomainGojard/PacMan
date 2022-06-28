@@ -34,4 +34,8 @@ public class PacMan extends Monsters {
         System.out.println(Colors.ANSI_CYAN + this.score);
     }
 
+    public void gameOver(){
+        System.out.println(Colors.ANSI_WHITE + "Vous avez perdu !\nVotre score est de " + Colors.ANSI_CYAN + this.score);
+    }
+
 }

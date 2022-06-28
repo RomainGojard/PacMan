@@ -70,7 +70,7 @@ public class Monsters {
         return new int[]{x, y};
     }
 
-    public boolean gameOver(ArrayList<Ghosts> arrayOfGhost) {
+    public boolean isGameOver(ArrayList<Ghosts> arrayOfGhost) {
         boolean gameOver = false;
         for (Ghosts ghost : arrayOfGhost) {
             if (ghost.getCoordinates()[0] == this.getCoordinates()[0] & ghost.getCoordinates()[1] == this.getCoordinates()[1]) {

@@ -18,11 +18,11 @@ public class Main {
         arrayOfGhosts.add(new Ghosts(5, 25));
         arrayOfGhosts.add(new Ghosts(8, 2));
         terrain.setStartGhosts(arrayOfGhosts);
-
         InputControllers inputControllers = new InputControllers();
 
         final long REFRESH_TIME = 500;
         boolean play = true;
+        boolean gameOverCase1, gameOverCase2 = false;
         while (play) {
             clearConsoleScreen();
 
@@ -35,23 +35,26 @@ public class Main {
                 }
             }
 
-            play = !pacMan.gameOver(arrayOfGhosts);
+            gameOverCase1 = pacMan.isGameOver(arrayOfGhosts);
 
-            if (play) {
 
-                for (Ghosts ghost : arrayOfGhosts
-                ) {
-                    String direction = ghost.whereToGo(terrain, pacMan);
-                    ghost.deplacerMonster(terrain, direction);
-                }
-
-                play = !pacMan.gameOver(arrayOfGhosts);
+            for (Ghosts ghost : arrayOfGhosts
+            ) {
+                String direction = ghost.whereToGo(terrain, pacMan);
+                ghost.deplacerMonster(terrain, direction);
             }
+
+            gameOverCase2 = pacMan.isGameOver(arrayOfGhosts);
 
             terrain.afficheTerrain();
 
-            pacMan.afficheScore();
-
+            if (gameOverCase1 | gameOverCase2) {
+                play = false;
+                pacMan.gameOver();
+                inputControllers = null;
+            } else {
+                pacMan.afficheScore();
+            }
             Thread.sleep(REFRESH_TIME);
         }
     }
