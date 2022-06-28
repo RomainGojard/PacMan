@@ -52,14 +52,18 @@ public class Tuile {
         isPacManHere = false;
         nextTuile.isPacManHere = true;
         nextTuile.pacMan = this.pacMan;
-        return new Tuile(' ', 0, 0);
+        if (nextTuile.form == '.') {
+            nextTuile.pacMan.score();
+            return new Tuile(' ', 0, 0);
+        }
+        return this;
     }
 
     public void switchTuileGhost(Ghosts ghost, Tuile netxTuile) {
         arrayOfGhost.remove(ghost);
         netxTuile.arrayOfGhost.add(ghost);
         netxTuile.isGhostHere = true;
-        if (arrayOfGhost.isEmpty()){
+        if (arrayOfGhost.isEmpty()) {
             isGhostHere = false;
         }
     }
@@ -68,7 +72,7 @@ public class Tuile {
         return this.isTroughable;
     }
 
-    public void setGhost(Ghosts ghost){
+    public void setGhost(Ghosts ghost) {
         isGhostHere = true;
         arrayOfGhost.add(ghost);
     }

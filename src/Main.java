@@ -50,6 +50,8 @@ public class Main {
 
             terrain.afficheTerrain();
 
+            pacMan.afficheScore();
+
             Thread.sleep(REFRESH_TIME);
         }
     }

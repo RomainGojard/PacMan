@@ -1,7 +1,9 @@
-public class PacMan extends Monsters{
+public class PacMan extends Monsters {
     private char form = '<';
 
-    public PacMan(int i, int j){
+    private int score = 0;
+
+    public PacMan(int i, int j) {
         super(i, j);
     }
 
@@ -12,8 +14,8 @@ public class PacMan extends Monsters{
         return color + form;
     }
 
-    public void pacManOrientation(String direction){
-        switch(direction){
+    public void pacManOrientation(String direction) {
+        switch (direction) {
             case "right" -> this.form = '<';
 
             case "down" -> form = 'ʌ';
@@ -23,4 +25,13 @@ public class PacMan extends Monsters{
             case "up" -> form = 'v';
         }
     }
+
+    public void score() {
+        this.score++;
+    }
+
+    public void afficheScore() {
+        System.out.println(Colors.ANSI_CYAN + this.score);
+    }
+
 }
