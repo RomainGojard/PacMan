@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Tuile {
     final String WALL_COLOR = Colors.ANSI_RED;
     final String COIN_COLOR = Colors.ANSI_BLUE;
-    private final char form;
+    private char form;
     private String color;
 
     private boolean isTroughable;
@@ -30,6 +30,7 @@ public class Tuile {
             case '.', ' ' -> {
                 color = COIN_COLOR;
                 isTroughable = true;
+                isPacManHere = false;
             }
             case '<' -> {
                 this.isPacManHere = true;
@@ -45,14 +46,19 @@ public class Tuile {
     }
 
     public Tuile swicthTuilePacMan(Tuile nextTuile) {
-        isPacManHere = false;
-        nextTuile.isPacManHere = true;
-        nextTuile.pacMan = this.pacMan;
-        if (nextTuile.form == '.') {
+        if (nextTuile.isScorable()) {
+            nextTuile.form = ' ';
+            nextTuile.pacMan = this.pacMan;
+            nextTuile.isPacManHere = true;
             nextTuile.pacMan.score();
             return new Tuile(' ', 0, 0);
+        } else {
+            nextTuile.pacMan = this.pacMan;
+            this.isPacManHere = false;
+            nextTuile.isPacManHere = true;
+            this.pacMan = null;
+            return this;
         }
-        return this;
     }
 
     public void switchTuileGhost(Ghosts ghost, Tuile netxTuile) {

@@ -3,9 +3,7 @@ import java.util.ArrayList;
 public class Terrain {
 
     private int maxScore = 0;
-    private final int xLenght;
 
-    private final int yLenght;
     private Tuile[][] terrainDeTuiles;
 
     public Terrain() {
@@ -34,8 +32,6 @@ public class Terrain {
             }
             i++;
         }
-        xLenght = terrainDeTuiles.length;
-        yLenght = terrainDeTuiles[0].length;
     }
 
     public void afficheTerrain() {
@@ -84,9 +80,7 @@ public class Terrain {
         return terrainDeTuiles[x][y].getIsTroughable();
     }
 
-    public int[] getLenght() {
-        return new int[]{this.xLenght, this.yLenght};
-    }
+
 
     public int getMaxScore(){
         return this.maxScore;
