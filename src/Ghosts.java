@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Ghosts extends Monsters {
@@ -51,27 +52,24 @@ public class Ghosts extends Monsters {
             case "random" -> {
                 boolean good = false;
                 int r = new Random().nextInt(4);
+                ArrayList<String> tabOfDirections = new ArrayList<>();
+                tabOfDirections.add("left");
+                tabOfDirections.add("up");
+                tabOfDirections.add("right");
+                tabOfDirections.add("down");
+                direction = tabOfDirections.get(r);
                 while (!good) {
-                    switch (r) {
-                        case 0 -> {
-                            direction = "left";
-                            good = terrain.getIsTroughable(ghostCoord[0], ghostCoord[1] - 1);
-                        }
-
-                        case 1 -> {
-                            direction = "up";
-                            good = terrain.getIsTroughable(ghostCoord[0] - 1, ghostCoord[1]);
-                        }
-                        case 2 -> {
-                            direction = "right";
-                            good = terrain.getIsTroughable(ghostCoord[0], ghostCoord[1] + 1);
-                        }
-                        case 3 -> {
-                            direction = "down";
-                            good = terrain.getIsTroughable(ghostCoord[0] + 1, ghostCoord[1]);
-                        }
+                    switch (direction) {
+                        case "left" -> good = terrain.getIsTroughable(ghostCoord[0], ghostCoord[1] - 1);
+                        case "up" -> good = terrain.getIsTroughable(ghostCoord[0] - 1, ghostCoord[1]);
+                        case "right" -> good = terrain.getIsTroughable(ghostCoord[0], ghostCoord[1] + 1);
+                        case "down" -> good = terrain.getIsTroughable(ghostCoord[0] + 1, ghostCoord[1]);
                     }
-                    r = new Random().nextInt(4);
+                    if (!good) {
+                        tabOfDirections.remove(r);
+                        r = new Random().nextInt(tabOfDirections.size());
+                        direction = tabOfDirections.get(r);
+                    }
                 }
             }
         }
