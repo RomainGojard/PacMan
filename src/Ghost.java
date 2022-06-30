@@ -1,23 +1,23 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Ghosts extends Monsters {
+public class Ghost extends Monster {
 
     private String role;
 
-    public Ghosts(int i, int j) {
+    public Ghost(int i, int j) {
         super(i, j);
         switch (j % 3) {
             case 0 -> {
-                color = Colors.ANSI_RED;
+                color = Color.ANSI_RED;
                 role = "follow";
             }
             case 1 -> {
-                color = Colors.ANSI_PURPLE;
+                color = Color.ANSI_PURPLE;
                 role = "follow";
             }
             case 2 -> {
-                color = Colors.ANSI_GREEN;
+                color = Color.ANSI_GREEN;
                 role = "random";
             }
         }

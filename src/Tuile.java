@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 
 public class Tuile {
-    final String WALL_COLOR = Colors.ANSI_RED;
-    final String COIN_COLOR = Colors.ANSI_BLUE;
+    final String WALL_COLOR = Color.ANSI_RED;
+    final String COIN_COLOR = Color.ANSI_BLUE;
     private char form;
     private String color;
 
     private boolean isTroughable;
 
     private PacMan pacMan;
-    private ArrayList<Ghosts> arrayOfGhost;
+    private ArrayList<Ghost> arrayOfGhost;
     private boolean isPacManHere;
     private boolean isGhostHere;
 
@@ -24,7 +24,7 @@ public class Tuile {
         }
     }
 
-    public Tuile(char caractere, int i, int j) {
+    public Tuile(char caractere) {
         arrayOfGhost = new ArrayList<>();
         switch (caractere) {
             case '.', ' ' -> {
@@ -32,10 +32,7 @@ public class Tuile {
                 isTroughable = true;
                 isPacManHere = false;
             }
-            case '<' -> {
-                this.isPacManHere = true;
-                pacMan = new PacMan(i, j);
-            }
+            case '<' -> this.isPacManHere = true;
             default -> {
                 color = WALL_COLOR;
                 isTroughable = false;
@@ -51,7 +48,7 @@ public class Tuile {
             nextTuile.pacMan = this.pacMan;
             nextTuile.isPacManHere = true;
             nextTuile.pacMan.score();
-            return new Tuile(' ', 0, 0);
+            return new Tuile(' ');
         } else {
             nextTuile.pacMan = this.pacMan;
             this.isPacManHere = false;
@@ -61,7 +58,7 @@ public class Tuile {
         }
     }
 
-    public void switchTuileGhost(Ghosts ghost, Tuile netxTuile) {
+    public void switchTuileGhost(Ghost ghost, Tuile netxTuile) {
         arrayOfGhost.remove(ghost);
         netxTuile.arrayOfGhost.add(ghost);
         netxTuile.isGhostHere = true;
@@ -70,17 +67,39 @@ public class Tuile {
         }
     }
 
+    public void monsterGetOnTuile(Monster monster) {
+        if (monster instanceof PacMan) {
+            pacMan = (PacMan) monster;
+            isPacManHere = true;
+            if (this.isScorable()) {
+                form = ' ';
+                pacMan.score();
+            }
+        } else if (monster instanceof Ghost) {
+            arrayOfGhost.add((Ghost) monster);
+            isGhostHere = true;
+        }
+    }
+
+    public void monsterLeaveTuile(Monster monster) {
+        if (monster instanceof PacMan) {
+            pacMan = null;
+            isPacManHere = false;
+        } else if (monster instanceof Ghost) {
+            arrayOfGhost.remove((Ghost) monster);
+            if (arrayOfGhost.isEmpty()) {
+                isGhostHere = false;
+            }
+        }
+    }
+
     public boolean getIsTroughable() {
         return this.isTroughable;
     }
 
-    public void setGhost(Ghosts ghost) {
+    public void setGhost(Ghost ghost) {
         isGhostHere = true;
         arrayOfGhost.add(ghost);
-    }
-
-    public PacMan getPacMan() {
-        return this.pacMan;
     }
 
     public boolean getIsPacManHere() {

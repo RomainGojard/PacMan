@@ -11,15 +11,15 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 
         Terrain terrain = new Terrain();
-        PacMan pacMan = terrain.searchStartPacMan();
-        ArrayList<Ghosts> arrayOfGhosts = new ArrayList<>();
-        arrayOfGhosts.add(new Ghosts(1, 3));
-        arrayOfGhosts.add(new Ghosts(5, 25));
-        arrayOfGhosts.add(new Ghosts(8, 2));
+        PacMan pacMan = terrain.getPacMan();
+        ArrayList<Ghost> arrayOfGhosts = new ArrayList<>();
+        arrayOfGhosts.add(new Ghost(1, 3));
+        arrayOfGhosts.add(new Ghost(5, 25));
+        arrayOfGhosts.add(new Ghost(8, 2));
         terrain.setStartGhosts(arrayOfGhosts);
         InputControllers inputControllers = new InputControllers();
 
-        final long REFRESH_TIME = 500;
+        final long REFRESH_TIME = 250;
         boolean play = true;
         int maxScore = terrain.getMaxScore();
         while (play) {
@@ -41,7 +41,7 @@ public class Main {
             }
 
 
-            for (Ghosts ghost : arrayOfGhosts
+            for (Ghost ghost : arrayOfGhosts
             ) {
                 String direction = ghost.whereToGo(terrain, pacMan);
                 ghost.deplacerMonster(terrain, direction);

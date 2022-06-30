@@ -4,6 +4,8 @@ public class Terrain {
 
     private int maxScore = 0;
 
+    private PacMan pacMan;
+
     private Tuile[][] terrainDeTuiles;
 
     public Terrain() {
@@ -16,7 +18,7 @@ public class Terrain {
                 "|...<......................|",
                 "|.----.--.--------.--.----.|",
                 "|.----.||.---||---.||.----.|",
-                "|......||....||....||......|",
+                "|......||....  ....||......|",
                 "|------||--|-||-|--||------|"
         };
 
@@ -24,9 +26,12 @@ public class Terrain {
         int i = 0;
         for (String row : terrain) {
             for (int j = 0; j < row.length(); j++) {
-                Tuile tuile = new Tuile(row.charAt(j), i, j);
-                terrainDeTuiles[i][j] = tuile;
-                if (tuile.isScorable()) {
+                char form = row.charAt(j);
+                terrainDeTuiles[i][j] = new Tuile(form);
+                if (form == PacMan.forms[0]) {
+                    pacMan = new PacMan(i, j);
+                }
+                if (terrainDeTuiles[i][j].isScorable()) {
                     maxScore++;
                 }
             }
@@ -45,35 +50,20 @@ public class Terrain {
 
         System.out.println(output);
     }
-
-    public PacMan searchStartPacMan() {
-        int coordI = 0;
-        int coordJ = 0;
-        for (int i = 0; i < terrainDeTuiles.length; i++) {
-            for (int j = 0; j < terrainDeTuiles[0].length; j++) {
-                if (terrainDeTuiles[i][j].getIsPacManHere()) {
-                    coordI = i;
-                    coordJ = j;
-                }
-            }
-        }
-        return terrainDeTuiles[coordI][coordJ].getPacMan();
-    }
-
-    public void setStartGhosts(ArrayList<Ghosts> arrayOfGhosts) {
-        for (Ghosts ghost : arrayOfGhosts
+    public void setStartGhosts(ArrayList<Ghost> arrayOfGhosts) {
+        for (Ghost ghost : arrayOfGhosts
         ) {
             int[] tab = ghost.getCoordinates();
             terrainDeTuiles[tab[0]][tab[1]].setGhost(ghost);
         }
     }
 
-    public void switchTuilePacMan(int oldX, int oldY, int newX, int newY) {
-        terrainDeTuiles[oldX][oldY] = terrainDeTuiles[oldX][oldY].swicthTuilePacMan(terrainDeTuiles[newX][newY]);
+    public void getToTuile(int i, int j, Monster monster){
+        terrainDeTuiles[i][j].monsterGetOnTuile(monster);
     }
 
-    public void switchTuileGhost(Ghosts ghost, int oldX, int oldY, int newX, int newY) {
-        terrainDeTuiles[oldX][oldY].switchTuileGhost(ghost, terrainDeTuiles[newX][newY]);
+    public void leaveTuile(int i, int j, Monster monster){
+        terrainDeTuiles[i][j].monsterLeaveTuile(monster);
     }
 
     public boolean getIsTroughable(int x, int y) {
@@ -81,8 +71,11 @@ public class Terrain {
     }
 
 
-
-    public int getMaxScore(){
+    public int getMaxScore() {
         return this.maxScore;
+    }
+
+    public PacMan getPacMan() {
+        return pacMan;
     }
 }
