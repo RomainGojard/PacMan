@@ -6,6 +6,10 @@ public class Terrain {
 
     private PacMan pacMan;
 
+    private boolean change;
+
+    private final static String clearScreen = "\033[H\033[2J" ;
+
     private Tuile[][] terrainDeTuiles;
 
     private ArrayList<Ghost> arrayOfGhost;
@@ -43,29 +47,27 @@ public class Terrain {
             }
             i++;
         }
+        change = true;
     }
 
     public void afficheTerrain() {
-        String output = "";
-        for (Tuile[] row : terrainDeTuiles) {
-            for (Tuile tuile : row) {
-                output = output.concat(tuile.afficheTuile());
+        if (change) {
+            change = false;
+            StringBuilder output = new StringBuilder(clearScreen);
+            output.append(pacMan.afficheScore()).append('\n');
+            for (Tuile[] row : terrainDeTuiles) {
+                for (Tuile tuile : row) {
+                    output.append(tuile.afficheTuile());
+                }
+                output.append("\n");
             }
-            output = output.concat("\n");
-        }
-        System.out.println(output);
-    }
-
-    public void setStartGhosts(ArrayList<Ghost> arrayOfGhosts) {
-        for (Ghost ghost : arrayOfGhosts
-        ) {
-            int[] tab = ghost.getCoordinates();
-            terrainDeTuiles[tab[0]][tab[1]].setGhost(ghost);
+            System.out.println(output);
         }
     }
 
     public void getToTuile(int i, int j, Monster monster) {
         terrainDeTuiles[i][j].monsterGetOnTuile(monster);
+        change = true;
     }
 
     public void leaveTuile(int i, int j, Monster monster) {

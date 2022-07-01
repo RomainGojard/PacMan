@@ -5,16 +5,22 @@ public class Monster {
     protected char[] forms = {};
     protected Terrain terrain;
 
+    protected long now;
+
+    protected final long moveDelay = 200;
+
+    protected long lastMove;
     protected char form;
     protected String color;
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
 
     Monster(int i, int j, Terrain terrain) {
         this.terrain = terrain;
         x = i;
         y = j;
         terrain.getToTuile(i, j, this);
+        lastMove = 0;
     }
 
     private int[] coordinatesInDirection(String direction) {
@@ -30,15 +36,19 @@ public class Monster {
     }
 
     public void deplacerMonster(Terrain terrain, String direction) {
-        int[] coord = this.coordinatesInDirection(direction);
-        int newX = coord[0];
-        int newY = coord[1];
-        if (terrain.getIsTroughable(newX, newY)) {
-            terrain.leaveTuile(x, y, this);
-            terrain.getToTuile(newX, newY, this);
-            x = newX;
-            y = newY;
-            this.monsterOrientation(direction);
+        now = System.currentTimeMillis();
+        if (now - lastMove >= moveDelay) {
+            int[] coord = this.coordinatesInDirection(direction);
+            int newX = coord[0];
+            int newY = coord[1];
+            if (terrain.getIsTroughable(newX, newY)) {
+                terrain.leaveTuile(x, y, this);
+                terrain.getToTuile(newX, newY, this);
+                x = newX;
+                y = newY;
+                this.monsterOrientation(direction);
+                lastMove = now;
+            }
         }
     }
 

@@ -2,12 +2,6 @@ import java.util.ArrayList;
 
 public class Main {
 
-    public static void clearConsoleScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-
-    }
-
     public static void main(String[] args) throws InterruptedException {
 
         Terrain terrain = new Terrain();
@@ -15,12 +9,9 @@ public class Main {
         ArrayList<Ghost> arrayOfGhosts = terrain.getArrayOfGhost();
         InputControllers inputControllers = new InputControllers();
 
-        final long REFRESH_TIME = 250;
+        final long REFRESH_TIME = 5L;
         boolean play = true;
-        int maxScore = terrain.getMaxScore();
         while (play) {
-            clearConsoleScreen();
-
             if (inputControllers.touchePressee) {
                 switch (inputControllers.touche) {
                     case (37) -> pacMan.deplacerMonster(terrain, "left");
@@ -35,7 +26,6 @@ public class Main {
                 System.out.println(pacMan.gameOver());
                 System.exit(0);
             }
-
             for (Ghost ghost : arrayOfGhosts
             ) {
                 String direction = ghost.whereToGo(terrain, pacMan);
@@ -45,10 +35,12 @@ public class Main {
             terrain.afficheTerrain();
 
             if (pacMan.isGameOver(arrayOfGhosts)) {
-            } else if (pacMan.win(maxScore)) {
+                play = false;
+                System.out.println(pacMan.gameOver());
+                System.exit(0);
+            } else if (pacMan.win()) {
                 play = false;
             } else {
-                pacMan.afficheScore(maxScore);
                 Thread.sleep(REFRESH_TIME);
             }
         }
