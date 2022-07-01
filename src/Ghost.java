@@ -22,6 +22,10 @@ public class Ghost extends Monster {
                 color = Color.ANSI_GREEN;
                 role = "random";
             }
+            case 3 -> {
+                color = Color.ANSI_CYAN;
+                role = "random";
+            }
         }
         forms = new char[]{'⋐', '⋑', '⋒', '⋓'};
         form = forms[0];
