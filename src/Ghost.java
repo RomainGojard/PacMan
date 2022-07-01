@@ -3,11 +3,13 @@ import java.util.Random;
 
 public class Ghost extends Monster {
 
+    private static int counter = 0;
+
     private String role;
 
-    public Ghost(int i, int j) {
-        super(i, j);
-        switch (j % 3) {
+    public Ghost(int i, int j, Terrain terrain) {
+        super(i, j, terrain);
+        switch (counter) {
             case 0 -> {
                 color = Color.ANSI_RED;
                 role = "follow";
@@ -23,6 +25,7 @@ public class Ghost extends Monster {
         }
         forms = new char[]{'⋐', '⋑', '⋒', '⋓'};
         form = forms[0];
+        counter ++;
     }
 
     public String whereToGo(Terrain terrain, PacMan pacMan) {

@@ -12,11 +12,7 @@ public class Main {
 
         Terrain terrain = new Terrain();
         PacMan pacMan = terrain.getPacMan();
-        ArrayList<Ghost> arrayOfGhosts = new ArrayList<>();
-        arrayOfGhosts.add(new Ghost(1, 3));
-        arrayOfGhosts.add(new Ghost(5, 25));
-        arrayOfGhosts.add(new Ghost(8, 2));
-        terrain.setStartGhosts(arrayOfGhosts);
+        ArrayList<Ghost> arrayOfGhosts = terrain.getArrayOfGhost();
         InputControllers inputControllers = new InputControllers();
 
         final long REFRESH_TIME = 250;
@@ -33,13 +29,12 @@ public class Main {
                     case (40) -> pacMan.deplacerMonster(terrain, "down");
                 }
             }
-
             if (pacMan.isGameOver(arrayOfGhosts)) {
                 terrain.afficheTerrain();
                 play = false;
-                pacMan.gameOver(maxScore);
+                System.out.println(pacMan.gameOver());
+                System.exit(0);
             }
-
 
             for (Ghost ghost : arrayOfGhosts
             ) {
@@ -50,8 +45,6 @@ public class Main {
             terrain.afficheTerrain();
 
             if (pacMan.isGameOver(arrayOfGhosts)) {
-                play = false;
-                pacMan.gameOver(maxScore);
             } else if (pacMan.win(maxScore)) {
                 play = false;
             } else {

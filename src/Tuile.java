@@ -31,14 +31,26 @@ public class Tuile {
                 color = COIN_COLOR;
                 isTroughable = true;
                 isPacManHere = false;
+                form = caractere;
             }
-            case '<' -> this.isPacManHere = true;
+            case '<' -> {
+                this.isPacManHere = true;
+                form = ' ';
+                isTroughable = true;
+                color = Color.ANSI_RESET;
+            }
+            case '⋐' -> {
+                isPacManHere = false;
+                form = '.';
+                color = COIN_COLOR;
+                isTroughable = true;
+            }
             default -> {
                 color = WALL_COLOR;
                 isTroughable = false;
+                form = caractere;
             }
         }
-        form = caractere;
 
     }
 

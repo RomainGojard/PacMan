@@ -2,17 +2,19 @@ import java.util.ArrayList;
 
 public class Monster {
 
-    public static char[] forms = {'T'};
+    protected char[] forms = {};
+    protected Terrain terrain;
 
     protected char form;
     protected String color;
     private int x;
     private int y;
 
-    Monster(int i, int j) {
+    Monster(int i, int j, Terrain terrain) {
+        this.terrain = terrain;
         x = i;
         y = j;
-
+        terrain.getToTuile(i, j, this);
     }
 
     private int[] coordinatesInDirection(String direction) {
@@ -58,12 +60,12 @@ public class Monster {
         return gameOver;
     }
 
-    public void monsterOrientation(String direction) {
+    private void monsterOrientation(String direction) {
         switch (direction) {
-            case "right" -> this.form = forms[0];
-            case "left" -> this.form = forms[1];
-            case "down" -> this.form = forms[2];
-            case "up" -> this.form = forms[3];
+            case "right" -> this.form = this.forms[0];
+            case "left" -> this.form = this.forms[1];
+            case "down" -> this.form = this.forms[2];
+            case "up" -> this.form = this.forms[3];
         }
     }
 }
