@@ -1,13 +1,24 @@
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Set;
+
+import static java.awt.event.KeyEvent.*;
+import static java.awt.event.KeyEvent.VK_RIGHT;
 
 public final class InputControllers extends JFrame implements KeyListener {
+
+    private static final Set<Integer> moveControllers = Set.of(new Integer[]{
+            VK_UP,
+            VK_LEFT,
+            VK_DOWN,
+            VK_RIGHT
+    });
     private static InputControllers inputControllers;
 
-    boolean touchePressee;
+    static boolean touchePressee;
 
-    int touche;
+    static int touche;
 
     public InputControllers() {
         if (inputControllers != null) {
@@ -42,9 +53,13 @@ public final class InputControllers extends JFrame implements KeyListener {
     public void keyTyped(KeyEvent ke) {
     }
 
-    public Integer getTouche() {
+    public static int getControl() {
         if (!touchePressee)
-            return null;
+            return -1;
+
+        if (!moveControllers.contains(touche))
+            return -1;
+
         return touche;
     }
 

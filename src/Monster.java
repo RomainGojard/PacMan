@@ -15,15 +15,21 @@ public class Monster {
     protected int x;
     protected int y;
 
+    protected String currentDirection;
+
+    protected String newDirection;
+
     Monster(int i, int j, Terrain terrain) {
         this.terrain = terrain;
         x = i;
         y = j;
         terrain.getToTuile(i, j, this);
         lastMove = 0;
+        currentDirection = null;
+        newDirection = null;
     }
 
-    private int[] coordinatesInDirection(String direction) {
+    protected int[] coordinatesInDirection(String direction) {
         int[] coord;
         switch (direction) {
             case "right" -> coord = new int[]{x, y + 1};
@@ -35,19 +41,37 @@ public class Monster {
         return coord;
     }
 
-    public void deplacerMonster(Terrain terrain, String direction) {
+
+    public void moveMonster(String direction) {
+        int[] coord = this.coordinatesInDirection(direction);
+        int newX = coord[0];
+        int newY = coord[1];
+        if (terrain.getIsTroughable(newX, newY)) {
+            terrain.leaveTuile(x, y, this);
+            terrain.getToTuile(newX, newY, this);
+            x = newX;
+            y = newY;
+            this.monsterOrientation(direction);
+            lastMove = now;
+        }
+    }
+
+    public void checkMove() {
+        if (this instanceof PacMan) {
+            ((PacMan) this).choiceMove();
+            if (currentDirection == null) {
+                return;
+            }
+        }
         now = System.currentTimeMillis();
+        String direction;
         if (now - lastMove >= moveDelay) {
-            int[] coord = this.coordinatesInDirection(direction);
-            int newX = coord[0];
-            int newY = coord[1];
-            if (terrain.getIsTroughable(newX, newY)) {
-                terrain.leaveTuile(x, y, this);
-                terrain.getToTuile(newX, newY, this);
-                x = newX;
-                y = newY;
-                this.monsterOrientation(direction);
-                lastMove = now;
+            if (this instanceof PacMan) {
+                direction = ((PacMan) this).whereToGo();
+                if (direction != null) this.moveMonster(direction);
+            } else if (this instanceof Ghost) {
+                direction = ((Ghost) this).whereToGo();
+                moveMonster(direction);
             }
         }
     }
@@ -60,8 +84,9 @@ public class Monster {
         return new int[]{x, y};
     }
 
-    public boolean isGameOver(ArrayList<Ghost> arrayOfGhost) {
+    public boolean isGameOver() {
         boolean gameOver = false;
+        ArrayList<Ghost> arrayOfGhost = terrain.getArrayOfGhost();
         for (Ghost ghost : arrayOfGhost) {
             if (ghost.getCoordinates()[0] == this.getCoordinates()[0] & ghost.getCoordinates()[1] == this.getCoordinates()[1]) {
                 gameOver = true;

@@ -28,4 +28,39 @@ public class PacMan extends Monster {
             return true;
         } else return false;
     }
+
+    public void choiceMove() {
+        int key = InputControllers.getControl();
+        switch (key) {
+            case (37) -> this.newDirection = "left";
+            case (38) -> this.newDirection = "up";
+            case (39) -> this.newDirection = "right";
+            case (40) -> this.newDirection = "down";
+        }
+        if (this.currentDirection == null) {
+            actualizeDirection();
+        }
+    }
+
+    public String whereToGo() {
+        String direction = null;
+        if (newDirection != null) {
+            int[] coord1 = this.coordinatesInDirection(this.newDirection);
+            int[] coord2 = this.coordinatesInDirection(this.currentDirection);
+            if (terrain.getIsTroughable(coord1[0], coord1[1])) {
+                direction = newDirection;
+                actualizeDirection();
+            } else if (terrain.getIsTroughable(coord2[0], coord2[1])) {
+                direction = currentDirection;
+            }
+        } else direction = currentDirection;
+        return direction;
+    }
+
+    private void actualizeDirection() {
+        this.currentDirection = newDirection;
+        this.newDirection = null;
+    }
+
+
 }

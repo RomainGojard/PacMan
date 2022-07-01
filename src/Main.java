@@ -12,29 +12,24 @@ public class Main {
         final long REFRESH_TIME = 5L;
         boolean play = true;
         while (play) {
-            if (inputControllers.touchePressee) {
-                switch (inputControllers.touche) {
-                    case (37) -> pacMan.deplacerMonster(terrain, "left");
-                    case (38) -> pacMan.deplacerMonster(terrain, "up");
-                    case (39) -> pacMan.deplacerMonster(terrain, "right");
-                    case (40) -> pacMan.deplacerMonster(terrain, "down");
-                }
-            }
-            if (pacMan.isGameOver(arrayOfGhosts)) {
+
+            pacMan.checkMove();
+
+            if (pacMan.isGameOver()) {
                 terrain.afficheTerrain();
                 play = false;
                 System.out.println(pacMan.gameOver());
                 System.exit(0);
             }
+
             for (Ghost ghost : arrayOfGhosts
             ) {
-                String direction = ghost.whereToGo(terrain, pacMan);
-                ghost.deplacerMonster(terrain, direction);
+                ghost.checkMove();
             }
 
             terrain.afficheTerrain();
 
-            if (pacMan.isGameOver(arrayOfGhosts)) {
+            if (pacMan.isGameOver()) {
                 play = false;
                 System.out.println(pacMan.gameOver());
                 System.exit(0);

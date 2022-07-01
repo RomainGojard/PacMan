@@ -32,7 +32,8 @@ public class Ghost extends Monster {
         counter ++;
     }
 
-    public String whereToGo(Terrain terrain, PacMan pacMan) {
+    public String whereToGo() {
+        PacMan pacMan = terrain.getPacMan();
         String direction = "";
         int[] ghostCoord = this.getCoordinates();
         switch (this.role) {
