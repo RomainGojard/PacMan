@@ -21,12 +21,11 @@ public class PacMan extends Monster {
         return (Color.ANSI_PURPLE + "Vous avez perdu !\nVotre score est de " + Color.ANSI_CYAN + this.score + " " + Color.ANSI_WHITE + "/ " + Color.ANSI_CYAN + terrain.getMaxScore());
     }
 
-    public boolean win() {
+    public void win() {
         if (this.score >= terrain.getMaxScore()) {
             System.out.println(Color.ANSI_PURPLE + "Vous avez gagné !\nVous avez atteint le score maximal de  " + Color.ANSI_CYAN + this.score);
             System.exit(0);
-            return true;
-        } else return false;
+        }
     }
 
     public void choiceMove() {
