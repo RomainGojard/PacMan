@@ -61,5 +61,7 @@ public class PacMan extends Monster {
         this.newDirection = null;
     }
 
-
+    public int getScore() {
+        return score;
+    }
 }

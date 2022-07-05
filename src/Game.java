@@ -27,7 +27,9 @@ public class Game {
 
         for (Ghost ghost : arrayOfGhost
         ) {
-            ghost.checkMove();
+            if (ghost.getFree()) {
+                ghost.checkMove();
+            }
         }
 
         terrain.afficheTerrain();
@@ -38,6 +40,15 @@ public class Game {
         } else {
             pacMan.win();
         }
+        checkCoins();
     }
 
+    public void checkCoins() {
+        score = pacMan.getScore();
+        switch (score) {
+            case (20) -> arrayOfGhost.get(1).free();
+            case (40) -> arrayOfGhost.get(2).free();
+            case (60) -> arrayOfGhost.get(3).free();
+        }
+    }
 }
