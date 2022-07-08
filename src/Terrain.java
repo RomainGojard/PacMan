@@ -8,7 +8,7 @@ public class Terrain {
 
     private boolean change;
 
-    private final static String clearScreen = "\033[H\033[2J" ;
+    private final static String clearScreen = "\033[H\033[2J";
 
     private Tuile[][] terrainDeTuiles;
 
@@ -31,7 +31,7 @@ public class Terrain {
                         "     |.||     ⋐    ||.|     ",
                         "     |.|| -------- ||.|     ",
                         "-----|.|| |   ⋐  | ||.|-----",
-                        "|     .   |   ⋐  |   .     |",
+                        "|    |.   |   ⋐  |   .|    |",
                         "-----|.|| |   ⋐  | ||.|-----",
                         "     |.|| -------- ||.|     ",
                         "     |.||          ||.|     ",
@@ -62,13 +62,22 @@ public class Terrain {
                 } else if (form == '⋐') {
                     arrayOfGhost.add(new Ghost(i, j, this));
                 }
-
-                if (terrainDeTuiles[i][j].isScorable()) {
-                    maxScore++;
-                }
             }
             i++;
         }
+
+        for (Tuile[] row : terrainDeTuiles) {
+            for (Tuile tuile : row
+            ) {
+                if (tuile.isItemHere()) {
+                    tuile.createItem(pacMan, arrayOfGhost);
+                    if (tuile.getScorable()) {
+                        maxScore++;
+                    }
+                }
+            }
+        }
+
         change = true;
     }
 

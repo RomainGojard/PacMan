@@ -3,6 +3,8 @@ import java.util.ArrayList;
 public class Tuile {
     final String WALL_COLOR = Color.ANSI_RED;
     final String COIN_COLOR = Color.ANSI_BLUE;
+
+    final String BONUS_COLOR = Color.ANSI_YELLOW;
     private char form;
     private String color;
 
@@ -11,6 +13,8 @@ public class Tuile {
     private PacMan pacMan;
     private ArrayList<Ghost> arrayOfGhost;
     private boolean isGhostHere;
+    private Item item;
+    private boolean isItemHere = false;
 
 
     public String afficheTuile() {
@@ -26,10 +30,22 @@ public class Tuile {
     public Tuile(char caractere) {
         arrayOfGhost = new ArrayList<>();
         switch (caractere) {
-            case '.', ' ' -> {
+            case ' ' -> {
                 color = COIN_COLOR;
                 isTroughable = true;
                 form = caractere;
+            }
+            case '.' -> {
+                color = COIN_COLOR;
+                isTroughable = true;
+                form = caractere;
+                isItemHere = true;
+            }
+            case 'o' -> {
+                color = BONUS_COLOR;
+                isTroughable = true;
+                form = caractere;
+                isItemHere = true;
             }
             case '<' -> {
                 form = ' ';
@@ -47,15 +63,13 @@ public class Tuile {
                 form = caractere;
             }
         }
-
     }
 
     public void monsterGetOnTuile(Monster monster) {
         if (monster instanceof PacMan) {
             pacMan = (PacMan) monster;
-            if (this.isScorable()) {
-                form = ' ';
-                pacMan.score();
+            if (item != null){
+                useItem();
             }
         } else if (monster instanceof Ghost) {
             arrayOfGhost.add((Ghost) monster);
@@ -78,7 +92,31 @@ public class Tuile {
         return this.isTroughable;
     }
 
-    public boolean isScorable() {
-        return this.form == '.';
+    public boolean isItemHere() {
+        return isItemHere;
+    }
+
+    public void createItem(PacMan pacMan, ArrayList<Ghost> arrayOfGhost) {
+        if (form == '.') {
+            item = new Coin(pacMan, arrayOfGhost);
+        } else if (form == 'o') {
+            item = new Bonus(pacMan, arrayOfGhost);
+        }
+    }
+
+    public void useItem() {
+        if (item instanceof Coin) {
+            ((Coin) item).score();
+        } else if (item instanceof Bonus) {
+            ((Bonus) item).useBonus();
+        }
+        item = null;
+        form = ' ';
+        color = Color.ANSI_RESET;
+        isItemHere = false;
+    }
+
+    public boolean getScorable(){
+        return item instanceof Coin;
     }
 }

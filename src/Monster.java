@@ -7,7 +7,7 @@ public class Monster {
 
     protected long now;
 
-    protected final long moveDelay = 200;
+    protected long moveDelay = 200;
 
     protected long lastMove;
     protected char form;
@@ -18,6 +18,8 @@ public class Monster {
     protected String currentDirection;
 
     protected String newDirection;
+
+    protected Bonus activeBonus;
 
     Monster(int i, int j, Terrain terrain) {
         this.terrain = terrain;
@@ -57,6 +59,7 @@ public class Monster {
     }
 
     public void checkMove() {
+        checkBonus();
         if (this instanceof PacMan) {
             ((PacMan) this).choiceMove();
             if (currentDirection == null) {
@@ -101,6 +104,17 @@ public class Monster {
             case "left" -> this.form = this.forms[1];
             case "down" -> this.form = this.forms[2];
             case "up" -> this.form = this.forms[3];
+        }
+    }
+
+    public void checkBonus() {
+        if (activeBonus != null && activeBonus.getIsEndOfBonus()) {
+            if (this instanceof PacMan) {
+                moveDelay += activeBonus.getBonusValue();
+            } else if (this instanceof Ghost) {
+                moveDelay -= activeBonus.getMalusValue();
+            }
+            activeBonus = null;
         }
     }
 }
