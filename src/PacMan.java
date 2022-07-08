@@ -21,13 +21,6 @@ public class PacMan extends Monster {
         return (Color.ANSI_PURPLE + "Vous avez perdu !\nVotre score est de " + Color.ANSI_CYAN + this.score + " " + Color.ANSI_WHITE + "/ " + Color.ANSI_CYAN + terrain.getMaxScore());
     }
 
-    public void win() {
-        if (this.score >= terrain.getMaxScore()) {
-            System.out.println(Color.ANSI_PURPLE + "Vous avez gagné !\nVous avez atteint le score maximal de  " + Color.ANSI_CYAN + this.score);
-            System.exit(0);
-        }
-    }
-
     public void choiceMove() {
         int key = InputControllers.getControl();
         switch (key) {
@@ -63,5 +56,9 @@ public class PacMan extends Monster {
 
     public int getScore() {
         return score;
+    }
+
+    public String win() {
+        return Color.ANSI_PURPLE + "Vous avez gagné !\nVous avez atteint le score maximal de  " + Color.ANSI_CYAN + this.score;
     }
 }

@@ -12,10 +12,21 @@ public class Coin extends Item {
     }
 
     public void checkCoins() {
-        switch (pacMan.getScore()) {
-            case (20) -> arrayOfGhost.get(1).free();
-            case (40) -> arrayOfGhost.get(2).free();
-            case (60) -> arrayOfGhost.get(3).free();
+        Ghost ghost = ghostToFree();
+        if (pacMan.getScore() % 30 == 0 && ghost != null){
+            ghost.free();
         }
+    }
+
+    public Ghost ghostToFree(){
+        int i = 0;
+        Ghost ghost = null;
+        while (i < arrayOfGhost.size() && ghost == null){
+            if (!arrayOfGhost.get(i).getFree()){
+                ghost = arrayOfGhost.get(i);
+            }
+            i++;
+        }
+        return ghost;
     }
 }

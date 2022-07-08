@@ -8,11 +8,8 @@ public class Main {
         final long REFRESH_TIME = 5L;
 
         while (true) {
-
             game.loopGame();
-
             Thread.sleep(REFRESH_TIME);
-
         }
     }
 }

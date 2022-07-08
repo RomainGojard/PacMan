@@ -53,7 +53,7 @@ public class Tuile {
                 color = Color.ANSI_RESET;
             }
             case '⋐' -> {
-                form = '.';
+                form = ' ';
                 color = COIN_COLOR;
                 isTroughable = true;
             }
@@ -68,7 +68,7 @@ public class Tuile {
     public void monsterGetOnTuile(Monster monster) {
         if (monster instanceof PacMan) {
             pacMan = (PacMan) monster;
-            if (item != null){
+            if (item != null) {
                 useItem();
             }
         } else if (monster instanceof Ghost) {
@@ -116,7 +116,11 @@ public class Tuile {
         isItemHere = false;
     }
 
-    public boolean getScorable(){
+    public void removeGhost() {
+        isGhostHere = false;
+    }
+
+    public boolean getScorable() {
         return item instanceof Coin;
     }
 }

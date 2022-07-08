@@ -1,24 +1,15 @@
-import java.util.ArrayList;
-
 public class Monster {
-
     protected char[] forms = {};
     protected Terrain terrain;
-
     protected long now;
-
     protected long moveDelay = 200;
-
     protected long lastMove;
     protected char form;
     protected String color;
     protected int x;
     protected int y;
-
     protected String currentDirection;
-
     protected String newDirection;
-
     protected Bonus activeBonus;
 
     Monster(int i, int j, Terrain terrain) {
@@ -87,17 +78,6 @@ public class Monster {
         return new int[]{x, y};
     }
 
-    public boolean isGameOver() {
-        boolean gameOver = false;
-        ArrayList<Ghost> arrayOfGhost = terrain.getArrayOfGhost();
-        for (Ghost ghost : arrayOfGhost) {
-            if (ghost.getCoordinates()[0] == this.getCoordinates()[0] & ghost.getCoordinates()[1] == this.getCoordinates()[1]) {
-                gameOver = true;
-            }
-        }
-        return gameOver;
-    }
-
     private void monsterOrientation(String direction) {
         switch (direction) {
             case "right" -> this.form = this.forms[0];
@@ -110,9 +90,9 @@ public class Monster {
     public void checkBonus() {
         if (activeBonus != null && activeBonus.getIsEndOfBonus()) {
             if (this instanceof PacMan) {
-                moveDelay += activeBonus.getBonusValue();
+                moveDelay += (activeBonus.getBonusValue()/100) * moveDelay;
             } else if (this instanceof Ghost) {
-                moveDelay -= activeBonus.getMalusValue();
+                moveDelay -= (activeBonus.getMalusValue()/100) * moveDelay;
             }
             activeBonus = null;
         }

@@ -3,10 +3,9 @@ import java.util.ArrayList;
 public class Bonus extends Item {
 
     private long startActive;
-
-    private final long bonusDuration = 15000;
-    private final int malusValue = 50;
-    private final int bonusValue = 50;
+    private final long bonusDuration = 8000;
+    private final int malusValue = 30; //Pourcentage
+    private final int bonusValue = 30; //Pourcentage
 
     public Bonus(PacMan pacMan, ArrayList<Ghost> arrayOfGhost) {
         super(pacMan, arrayOfGhost);
