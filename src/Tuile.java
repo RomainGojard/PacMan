@@ -68,7 +68,7 @@ public class Tuile {
     public void monsterGetOnTuile(Monster monster) {
         if (monster instanceof PacMan) {
             pacMan = (PacMan) monster;
-            if (item != null) {
+            if (isItemHere) {
                 useItem();
             }
         } else if (monster instanceof Ghost) {
@@ -107,8 +107,10 @@ public class Tuile {
     public void useItem() {
         if (item instanceof Coin) {
             ((Coin) item).score();
-        } else if (item instanceof Bonus) {
+        } else if (item instanceof Bonus && pacMan.activeBonus == null) {
             ((Bonus) item).useBonus();
+        } else {
+            return;
         }
         item = null;
         form = ' ';

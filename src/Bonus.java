@@ -4,8 +4,8 @@ public class Bonus extends Item {
 
     private long startActive;
     private final long bonusDuration = 8000;
-    private final int malusValue = 30; //Pourcentage
-    private final int bonusValue = 30; //Pourcentage
+    private final int malusValue = 75;
+    private final int bonusValue = 75;
 
     public Bonus(PacMan pacMan, ArrayList<Ghost> arrayOfGhost) {
         super(pacMan, arrayOfGhost);

@@ -90,9 +90,9 @@ public class Monster {
     public void checkBonus() {
         if (activeBonus != null && activeBonus.getIsEndOfBonus()) {
             if (this instanceof PacMan) {
-                moveDelay += (activeBonus.getBonusValue()/100) * moveDelay;
+                moveDelay += activeBonus.getBonusValue();
             } else if (this instanceof Ghost) {
-                moveDelay -= (activeBonus.getMalusValue()/100) * moveDelay;
+                moveDelay -= activeBonus.getMalusValue();
             }
             activeBonus = null;
         }
