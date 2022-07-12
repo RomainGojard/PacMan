@@ -3,9 +3,10 @@ import java.util.ArrayList;
 public class Bonus extends Item {
 
     private long startActive;
-    private final long bonusDuration = 8000;
-    private final int malusValue = 75;
-    private final int bonusValue = 75;
+    private final long BONUS_DURATION = 8000;
+    private final int MALUS_VALUE = 75;
+    private final int BONUS_VALUE = 75;
+    private final String COLOR_BONUS = Color.ANSI_CYAN;
 
     public Bonus(PacMan pacMan, ArrayList<Ghost> arrayOfGhost) {
         super(pacMan, arrayOfGhost);
@@ -13,24 +14,25 @@ public class Bonus extends Item {
 
     public void useBonus() {
         pacMan.activeBonus = this;
-        pacMan.moveDelay -= bonusValue;
+        pacMan.moveDelay -= BONUS_VALUE;
+        pacMan.color = COLOR_BONUS;
         for (Ghost ghost : arrayOfGhost
         ) {
             ghost.activeBonus = this;
-            ghost.moveDelay += malusValue;
+            ghost.moveDelay += MALUS_VALUE;
         }
         startActive = System.currentTimeMillis();
     }
 
     public boolean getIsEndOfBonus() {
-        return System.currentTimeMillis() - startActive >= bonusDuration;
+        return System.currentTimeMillis() - startActive >= BONUS_DURATION;
     }
 
     public int getBonusValue() {
-        return bonusValue;
+        return BONUS_VALUE;
     }
 
     public int getMalusValue() {
-        return malusValue;
+        return MALUS_VALUE;
     }
 }

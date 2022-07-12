@@ -91,6 +91,7 @@ public class Monster {
         if (activeBonus != null && activeBonus.getIsEndOfBonus()) {
             if (this instanceof PacMan) {
                 moveDelay += activeBonus.getBonusValue();
+                color = ((PacMan) this).BASE_COLOR;
             } else if (this instanceof Ghost) {
                 moveDelay -= activeBonus.getMalusValue();
             }

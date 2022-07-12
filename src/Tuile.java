@@ -118,10 +118,6 @@ public class Tuile {
         isItemHere = false;
     }
 
-    public void removeGhost() {
-        isGhostHere = false;
-    }
-
     public boolean getScorable() {
         return item instanceof Coin;
     }

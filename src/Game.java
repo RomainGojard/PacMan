@@ -28,7 +28,7 @@ public class Game {
             if (ghost.getCoordinates()[0] == pacMan.getCoordinates()[0] && ghost.getCoordinates()[1] == pacMan.getCoordinates()[1]) {
                 if (pacMan.activeBonus != null) {
                     arrayOfGhostToRemove.add(ghost);
-                    terrain.removeGhost(ghost.getCoordinates());
+                    terrain.removeGhost(ghost);
                 } else {
                     terrain.afficheTerrain();
                     System.out.println(pacMan.gameOver());

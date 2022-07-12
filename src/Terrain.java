@@ -106,8 +106,9 @@ public class Terrain {
         terrainDeTuiles[i][j].monsterLeaveTuile(monster);
     }
 
-    public void removeGhost(int[] coordinates) {
-        terrainDeTuiles[coordinates[0]][coordinates[1]].removeGhost();
+    public void removeGhost(Ghost ghost) {
+        int[] coordinates = ghost.getCoordinates();
+        terrainDeTuiles[coordinates[0]][coordinates[1]].monsterLeaveTuile(ghost);
     }
 
     public boolean getIsTroughable(int x, int y) {

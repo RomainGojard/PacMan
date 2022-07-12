@@ -2,11 +2,13 @@ public class PacMan extends Monster {
 
     private int score = 0;
 
+    protected String BASE_COLOR = Color.ANSI_YELLOW;
+
     public PacMan(int i, int j, Terrain terrain) {
         super(i, j, terrain);
         forms = new char[]{'<', '>', 'ʌ', 'v'};
         form = forms[0];
-        color = Color.ANSI_YELLOW;
+        color =BASE_COLOR;
     }
 
     public void score() {
