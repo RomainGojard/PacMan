@@ -80,6 +80,9 @@ public class Tuile {
         } else if (monster instanceof Ghost) {
             arrayOfGhost.add((Ghost) monster);
             isGhostHere = true;
+            if (isItemHere && item instanceof Portal) {
+                useItem(monster);
+            }
         }
     }
 

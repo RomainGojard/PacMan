@@ -5,7 +5,7 @@ public class Strategy {
 
     private final String name;
 
-    public Strategy(String name){
+    public Strategy(String name) {
         this.name = name;
     }
 
@@ -20,15 +20,38 @@ public class Strategy {
             direction = "up";
         } else if (isXDistanceBigger & (vector[0] < 0) & terrain.getIsTroughable(ghostCoord[0] + 1, ghostCoord[1])) {
             direction = "down";
+        } else if (isXDistanceBigger) {
+            int r = new Random().nextInt(2);
+            ArrayList<String> tabOfDirections = new ArrayList<>();
+            tabOfDirections.add("left");
+            tabOfDirections.add("right");
+            String testDirection = tabOfDirections.get(r);
+            int[] coord = ghost.coordinatesInDirection(testDirection);
+            if (terrain.getIsTroughable(coord[0], coord[1])) {
+                direction = testDirection;
+            } else {
+                tabOfDirections.remove(testDirection);
+                direction = tabOfDirections.get(0);
+            }
+
         } else {
             if (vector[1] > 0 & terrain.getIsTroughable(ghostCoord[0], ghostCoord[1] - 1)) {
                 direction = "left";
             } else if (vector[1] <= 0 & terrain.getIsTroughable(ghostCoord[0], ghostCoord[1] + 1)) {
                 direction = "right";
-            } else if (vector[0] > 0 & terrain.getIsTroughable(ghostCoord[0], ghostCoord[1])) {
-                direction = "up";
             } else {
-                direction = "down";
+                int r = new Random().nextInt(2);
+                ArrayList<String> tabOfDirections = new ArrayList<>();
+                tabOfDirections.add("up");
+                tabOfDirections.add("down");
+                String testDirection = tabOfDirections.get(r);
+                int[] coord = ghost.coordinatesInDirection(testDirection);
+                if (terrain.getIsTroughable(coord[0], coord[1])) {
+                    direction = testDirection;
+                } else {
+                    tabOfDirections.remove(testDirection);
+                    direction = tabOfDirections.get(0);
+                }
             }
         }
         return direction;
