@@ -41,9 +41,9 @@ public class Monster {
         int newY = coord[1];
         if (terrain.getIsTroughable(newX, newY)) {
             terrain.leaveTuile(x, y, this);
-            terrain.getToTuile(newX, newY, this);
             x = newX;
             y = newY;
+            terrain.getToTuile(newX, newY, this);
             this.monsterOrientation(direction);
             lastMove = now;
         }
@@ -97,5 +97,10 @@ public class Monster {
             }
             activeBonus = null;
         }
+    }
+
+    public void setCoordinates(int[] coordinates) {
+        x = coordinates[0];
+        y = coordinates[1];
     }
 }

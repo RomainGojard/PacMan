@@ -31,7 +31,7 @@ public class Terrain {
                         "     |.||     ⋐    ||.|     ",
                         "     |.|| -------- ||.|     ",
                         "-----|.|| |   ⋐  | ||.|-----",
-                        "|    |.   |   ⋐  |   .|    |",
+                        "҉     .   |   ⋐  |   .     ҉",
                         "-----|.|| |   ⋐  | ||.|-----",
                         "     |.|| -------- ||.|     ",
                         "     |.||          ||.|     ",
@@ -66,16 +66,21 @@ public class Terrain {
             i++;
         }
 
+        i = 0;
+        int j = 0;
         for (Tuile[] row : terrainDeTuiles) {
             for (Tuile tuile : row
             ) {
                 if (tuile.isItemHere()) {
-                    tuile.createItem(pacMan, arrayOfGhost);
+                    createItem(tuile, i, j);
                     if (tuile.getScorable()) {
                         maxScore++;
                     }
                 }
+                j++;
             }
+            j=0;
+            i++;
         }
 
         change = true;
@@ -111,6 +116,14 @@ public class Terrain {
         terrainDeTuiles[coordinates[0]][coordinates[1]].monsterLeaveTuile(ghost);
     }
 
+    public void createItem(Tuile tuile, int i, int j) {
+        switch (tuile.getForm()) {
+            case ('.') -> tuile.setItem(new Coin(pacMan, arrayOfGhost));
+            case ('o') -> tuile.setItem(new Bonus(pacMan, arrayOfGhost));
+            case ('҉') -> tuile.setItem(new Portal(pacMan, arrayOfGhost, this, i, j));
+        }
+    }
+
     public boolean getIsTroughable(int x, int y) {
         return terrainDeTuiles[x][y].getIsTroughable();
     }
@@ -126,5 +139,9 @@ public class Terrain {
 
     public ArrayList<Ghost> getArrayOfGhost() {
         return arrayOfGhost;
+    }
+
+    public int[] getLenght(){
+        return new int[]{terrainDeTuiles.length, terrainDeTuiles[0].length};
     }
 }

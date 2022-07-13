@@ -57,6 +57,12 @@ public class Tuile {
                 color = COIN_COLOR;
                 isTroughable = true;
             }
+            case '҉' -> {
+                form = caractere;
+                color = Color.ANSI_GREEN;
+                isTroughable = true;
+                isItemHere = true;
+            }
             default -> {
                 color = WALL_COLOR;
                 isTroughable = false;
@@ -69,7 +75,7 @@ public class Tuile {
         if (monster instanceof PacMan) {
             pacMan = (PacMan) monster;
             if (isItemHere) {
-                useItem();
+                useItem(monster);
             }
         } else if (monster instanceof Ghost) {
             arrayOfGhost.add((Ghost) monster);
@@ -96,19 +102,14 @@ public class Tuile {
         return isItemHere;
     }
 
-    public void createItem(PacMan pacMan, ArrayList<Ghost> arrayOfGhost) {
-        if (form == '.') {
-            item = new Coin(pacMan, arrayOfGhost);
-        } else if (form == 'o') {
-            item = new Bonus(pacMan, arrayOfGhost);
-        }
-    }
-
-    public void useItem() {
+    public void useItem(Monster monster) {
         if (item instanceof Coin) {
             ((Coin) item).score();
         } else if (item instanceof Bonus && pacMan.activeBonus == null) {
             ((Bonus) item).useBonus();
+        } else if (item instanceof Portal) {
+            ((Portal) item).usePortal(monster);
+            return;
         } else {
             return;
         }
@@ -120,5 +121,13 @@ public class Tuile {
 
     public boolean getScorable() {
         return item instanceof Coin;
+    }
+
+    public char getForm() {
+        return form;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 }
