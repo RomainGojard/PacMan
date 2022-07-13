@@ -20,6 +20,7 @@ public class Bonus extends Item {
         ) {
             ghost.activeBonus = this;
             ghost.moveDelay += MALUS_VALUE;
+            ghost.setNewStrategy(new Strategy("flee"));
         }
         startActive = System.currentTimeMillis();
     }

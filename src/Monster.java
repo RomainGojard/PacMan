@@ -94,6 +94,7 @@ public class Monster {
                 color = ((PacMan) this).BASE_COLOR;
             } else if (this instanceof Ghost) {
                 moveDelay -= activeBonus.getMalusValue();
+                ((Ghost) this).setDefaultStrategy();
             }
             activeBonus = null;
         }

@@ -1,9 +1,7 @@
-import java.util.ArrayList;
-import java.util.Random;
-
 public class Ghost extends Monster {
 
     private static int counter = 0;
+    private Strategy defaultStrategy;
 
     private Strategy strategy;
 
@@ -14,22 +12,26 @@ public class Ghost extends Monster {
         switch (counter) {
             case 0 -> {
                 color = Color.ANSI_RED;
-                strategy = new Strategy("follow");
+                defaultStrategy = new Strategy("follow");
+                strategy = defaultStrategy;
                 free = true;
             }
             case 1 -> {
                 color = Color.ANSI_PURPLE;
-                strategy = new Strategy("follow");
+                defaultStrategy = new Strategy("follow");
+                strategy = defaultStrategy;
                 free = false;
             }
             case 2 -> {
                 color = Color.ANSI_GREEN;
-                strategy = new Strategy("random");
+                defaultStrategy = new Strategy("random");
+                strategy = defaultStrategy;
                 free = false;
             }
             case 3 -> {
                 color = Color.ANSI_CYAN;
-                strategy = new Strategy("random");
+                defaultStrategy = new Strategy("random");
+                strategy = defaultStrategy;
                 free = false;
             }
         }
@@ -43,6 +45,7 @@ public class Ghost extends Monster {
         switch (strategy.getName()) {
             case ("follow") -> direction = strategy.follow(terrain, this);
             case ("random") -> direction = strategy.random(terrain, this);
+            case ("flee") -> direction = strategy.flee(terrain, this);
             default -> direction = null;
         }
         return direction;
@@ -56,6 +59,14 @@ public class Ghost extends Monster {
             free = true;
             lastMove = now;
         }
+    }
+
+    public void setNewStrategy(Strategy strategy){
+        this.strategy = strategy;
+    }
+
+    public void setDefaultStrategy(){
+        this.strategy = defaultStrategy;
     }
 
     public boolean getFree() {
