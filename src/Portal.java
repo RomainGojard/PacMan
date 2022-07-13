@@ -33,7 +33,7 @@ public class Portal extends Item {
 
     public void setSafePlaceOfPortal() {
         int[] lenght = terrain.getLenght();
-        int[] coord = new int[]{};
+        int[] coord;
         if (x + 1 < lenght[0] - 1 && y < lenght[1] - 1 && x >= 0 && y >= 0 && terrain.getIsTroughable(x + 1, y)) {
             coord = new int[]{x + 1, y};
         } else if ((x - 1 < lenght[0] - 1 && y < lenght[1] - 1 && x >= 0 && y >= 0 && terrain.getIsTroughable(x - 1, y))) {
