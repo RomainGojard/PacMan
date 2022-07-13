@@ -18,13 +18,13 @@ public class Ghost extends Monster {
             }
             case 1 -> {
                 color = Color.ANSI_PURPLE;
-                defaultStrategy = new Strategy("follow");
+                defaultStrategy = new Strategy("random");
                 strategy = defaultStrategy;
                 free = false;
             }
             case 2 -> {
                 color = Color.ANSI_GREEN;
-                defaultStrategy = new Strategy("random");
+                defaultStrategy = new Strategy("follow");
                 strategy = defaultStrategy;
                 free = false;
             }
@@ -42,7 +42,7 @@ public class Ghost extends Monster {
 
     public String whereToGo() {
         String direction;
-        switch (strategy.getName()) {
+        switch (strategy.name()) {
             case ("follow") -> direction = strategy.follow(terrain, this);
             case ("random") -> direction = strategy.random(terrain, this);
             case ("flee") -> direction = strategy.flee(terrain, this);
